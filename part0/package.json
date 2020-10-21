@@ -16,8 +16,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "aws s3 sync ./build s3://simple-react-app-part0 --delete --profile aws_course",
-    "postdeploy": "aws cloudfront create-invalidation --distribution-id E31ODT77OM7PB8 --paths \"/*\" --profile aws_course"
+    "deploy": "aws s3 sync ./build s3://simple-react-app-part0 --delete --profile=aws_course_user",
+    "postdeploy": "aws cloudfront create-invalidation --distribution-id E31ODT77OM7PB8 --paths \"/*\" --profile aws_course_user"
   },
   "eslintConfig": {
     "extends": "react-app"

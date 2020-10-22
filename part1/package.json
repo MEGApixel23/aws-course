@@ -11,7 +11,6 @@
     "deploy": "eb deploy"
   },
   "keywords": [],
-  "author": "latif.s",
   "license": "MIT",
   "engines": {
     "node": "12.18.4"

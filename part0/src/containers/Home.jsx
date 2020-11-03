@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import logo from '../logo.svg';
+import AddNewLesson from '../components/AddNewLesson'
 
 const Home = () => {
   const [lessons, setLessons] = useState([]);
@@ -10,8 +11,15 @@ const Home = () => {
         const data = await response.json();
 
         setLessons(data);
-      })
+      });
   }, []);
+
+  const addNewLesson = (lesson) => {
+    setLessons([
+      ...lessons,
+      lesson,
+    ]);
+  };
 
   return (
     <div className="App">
@@ -24,6 +32,7 @@ const Home = () => {
             </div>
           ))}
         </div>
+        <AddNewLesson onAdded={addNewLesson} />
       </header>
     </div>
   );

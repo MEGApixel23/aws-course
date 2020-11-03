@@ -30,7 +30,7 @@ app.post('/lessons', async (req, res) => {
   );
   const [lesson] = await conn.query('SELECT * FROM `lessons` WHERE id = ?', [insertId]);
 
-  res.json(lesson);
+  res.json(lesson && lesson[0] || {});
 });
 
 const server = app.listen(process.env.PORT || 3003, () => {

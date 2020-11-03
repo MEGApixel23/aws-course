@@ -1,27 +1,35 @@
 'use strict';
 import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import { getConnection } from '../services/mysql'
 
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hello world!' });
 });
 
-app.get('/lessons', (req, res) => {
-  res.json([
-    {
-      id: 1,
-      title: 'Part 0',
-      url: 'https://www.notion.so/mpx23/Part-0-S3-CloudFront-and-IAM-57919dc010374552988f0ed71ff7ddf3'
-    }, {
-      id: 2,
-      title: 'Part 1',
-      url: 'https://www.notion.so/mpx23/Part-1-Elastic-Beanstalk-e776ae61957044e3af1b6eb1c2a2dc09'
-    }
-  ]);
+app.get('/lessons', async (req, res) => {
+  const conn = await getConnection();
+  const [lessons] = await conn.query('SELECT * FROM `lessons`');
+
+  res.json(lessons);
+});
+
+app.post('/lessons', async (req, res) => {
+  const { title, url } = req.body;
+  const conn = await getConnection();
+  const [{ insertId }] = await conn.execute(
+    'INSERT INTO `lessons` (title, url) VALUES (?, ?)',
+    [title, url]
+  );
+  const [lesson] = await conn.query('SELECT * FROM `lessons` WHERE id = ?', [insertId]);
+
+  res.json(lesson);
 });
 
 const server = app.listen(process.env.PORT || 3003, () => {

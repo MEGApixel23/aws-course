@@ -6,7 +6,7 @@ const Home = () => {
   const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
-    fetch('https://api.megapixel23.com/lessons')
+    fetch('https://1e7vsctuw8.execute-api.eu-central-1.amazonaws.com/dev/lessons')
       .then(async (response) => {
         const data = await response.json();
 

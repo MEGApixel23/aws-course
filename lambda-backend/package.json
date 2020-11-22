@@ -1,0 +1,17 @@
+{
+  "name": "lambda-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "predeploy": "zip -r function.zip .",
+    "deploy:getLessons":"npm run predeploy && aws lambda update-function-code --function-name getLessons --region eu-central-1 --profile aws_course_user --zip-file fileb://function.zip",
+    "deploy:createLesson":"npm run predeploy && aws lambda update-function-code --function-name createLesson --region eu-central-1 --profile aws_course_user --zip-file fileb://function.zip",
+    "deploy": "npm run deploy:getLessons && npm run deploy:createLesson"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serverless-mysql": "^1.5.4"
+  }
+}

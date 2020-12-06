@@ -18,6 +18,26 @@ functions:
           path: lessons
           method: GET
           cors: true
+    environment:
+      LESSONS_TABLE: !Ref LessonsTable
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:Scan
+        Resource: !GetAtt LessonsTable.Arn
+
+resources:
+  Resources:
+    LessonsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
 
 plugins:
   - serverless-offline
+  - serverless-iam-roles-per-function

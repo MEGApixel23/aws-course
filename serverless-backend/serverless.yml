@@ -9,6 +9,7 @@ provider:
   region: eu-central-1
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    LESSONS_TABLE: !Ref LessonsTable
 
 functions:
   getLessons:
@@ -23,6 +24,20 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:Scan
+        Resource: !GetAtt LessonsTable.Arn
+
+  createLesson:
+    handler: handlers/lessons/create.main
+    events:
+      - http:
+          path: lessons
+          method: POST
+          cors: true
+    environment:
+      LESSONS_TABLE: !Ref LessonsTable
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:PutItem
         Resource: !GetAtt LessonsTable.Arn
 
 resources:

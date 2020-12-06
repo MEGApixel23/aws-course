@@ -15,5 +15,8 @@
     "serverless": "^2.15.0",
     "serverless-iam-roles-per-function": "^3.0.1",
     "serverless-offline": "^6.8.0"
+  },
+  "dependencies": {
+    "uuid": "^8.3.1"
   }
 }

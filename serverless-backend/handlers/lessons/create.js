@@ -1,13 +1,21 @@
-const { getConnection } = require('../../services/mysql');
+const { DynamoDB } = require('aws-sdk');
+const { v4 } = require('uuid');
+
+const dynamoDb = new DynamoDB.DocumentClient();
 
 module.exports.main = async (event) => {
   const { title, url } = JSON.parse(event.body);
-  const conn = await getConnection();
-  const { insertId } = await conn.query(
-    'INSERT INTO `lessons` (title, url) VALUES (?, ?)',
-    [title, url]
-  );
-  const [lesson] = await conn.query('SELECT * FROM `lessons` WHERE id = ?', [insertId]);
+  const lesson = {
+    id: v4(),
+    title,
+    url,
+    createdAt: new Date().toISOString(),
+  };
+
+  await dynamoDb.put({
+    TableName: process.env.LESSONS_TABLE,
+    Item: lesson,
+  }).promise();
 
   return {
     statusCode: 200,

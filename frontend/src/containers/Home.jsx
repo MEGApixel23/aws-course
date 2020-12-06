@@ -6,7 +6,7 @@ const Home = () => {
   const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
-    fetch('https://1e7vsctuw8.execute-api.eu-central-1.amazonaws.com/dev/lessons')
+    fetch('https://3pnightw08.execute-api.eu-central-1.amazonaws.com/dev/lessons')
       .then(async (response) => {
         const data = await response.json();
 

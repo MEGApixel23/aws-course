@@ -9,7 +9,7 @@ const AddNewLesson = ({ onAdded }) => {
     e.preventDefault();
 
     (async () => {
-      const rawResponse = await fetch('https://1e7vsctuw8.execute-api.eu-central-1.amazonaws.com/dev/lessons', {
+      const rawResponse = await fetch('https://3pnightw08.execute-api.eu-central-1.amazonaws.com/dev/lessons', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

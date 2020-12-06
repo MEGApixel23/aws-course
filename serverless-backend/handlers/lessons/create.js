@@ -1,10 +1,17 @@
 const { DynamoDB } = require('aws-sdk');
 const { v4 } = require('uuid');
+const middy = require('@middy/core');
+const cors = require('@middy/http-cors');
+const jsonBodyParser = require('@middy/http-json-body-parser');
+const errorHandler = require('@middy/http-error-handler');
+const JSONErrorHandlerMiddleware = require('middy-middleware-json-error-handler');
+
+const validator = require('../../validators/createLesson');
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-module.exports.main = async (event) => {
-  const { title, url } = JSON.parse(event.body);
+const main = async (event) => {
+  const { title, url } = event.body;
   const lesson = {
     id: v4(),
     title,
@@ -19,11 +26,13 @@ module.exports.main = async (event) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify(lesson),
-    headers: {
-      'Access-Control-Allow-Headers' : 'Content-Type',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-    }
+    body: JSON.stringify(lesson)
   };
 }
+
+module.exports.main = middy(main)
+  .use(validator)
+  .use(jsonBodyParser())
+  .use(cors())
+  .use(errorHandler())
+  .use(JSONErrorHandlerMiddleware.default());

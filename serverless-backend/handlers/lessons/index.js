@@ -1,8 +1,10 @@
 const { DynamoDB } = require('aws-sdk');
+const middy = require('@middy/core');
+const cors = require('@middy/http-cors');
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-module.exports.main = async () => {
+const main = async () => {
   const result = await dynamoDb.scan({
     TableName: process.env.LESSONS_TABLE,
   }).promise();
@@ -10,10 +12,8 @@ module.exports.main = async () => {
   return {
     statusCode: 200,
     body: JSON.stringify(result.Items),
-    headers: {
-      'Access-Control-Allow-Headers' : 'Content-Type',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-    }
   };
 };
+
+module.exports.main = middy(main)
+  .use(cors());

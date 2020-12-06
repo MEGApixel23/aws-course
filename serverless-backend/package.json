@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env AWS_PROFILE=aws_course_user sls offline"
+    "start": "cross-env AWS_PROFILE=aws_course_user sls offline",
+    "deploy": "cross-env AWS_PROFILE=aws_course_user sls deploy"
   },
   "author": "",
   "license": "ISC",

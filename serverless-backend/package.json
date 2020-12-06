@@ -4,15 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env AWS_PROFILE=aws_course_user sls offline",
-    "deploy": "cross-env AWS_PROFILE=aws_course_user sls deploy"
+    "start": "env-cmd -f .env cross-env AWS_PROFILE=aws_course_user sls offline",
+    "deploy": "cross-env AWS_PROFILE=aws_course_user sls deploy",
+    "export-env": "cross-env AWS_PROFILE=aws_course_user sls export-env"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "aws-sdk": "^2.804.0",
     "cross-env": "^7.0.3",
+    "env-cmd": "^10.1.0",
     "serverless": "^2.15.0",
+    "serverless-export-env": "^1.4.0",
     "serverless-iam-roles-per-function": "^3.0.1",
     "serverless-offline": "^6.8.0"
   },

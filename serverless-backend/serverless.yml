@@ -1,0 +1,23 @@
+service: serverless-backend
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: eu-central-1
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+
+functions:
+  getLessons:
+    handler: handlers/lessons/index.main
+    events:
+      - http:
+          path: lessons
+          method: GET
+          cors: true
+
+plugins:
+  - serverless-offline

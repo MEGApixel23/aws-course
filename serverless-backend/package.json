@@ -1,0 +1,16 @@
+{
+  "name": "serverless-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env AWS_PROFILE=aws_course_user sls offline"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "serverless": "^2.15.0",
+    "serverless-offline": "^6.8.0"
+  }
+}

@@ -5,8 +5,9 @@ const cors = require('@middy/http-cors');
 const jsonBodyParser = require('@middy/http-json-body-parser');
 const errorHandler = require('@middy/http-error-handler');
 const JSONErrorHandlerMiddleware = require('middy-middleware-json-error-handler');
+const validator = require('@middy/validator');
 
-const validator = require('../../validators/createLesson');
+const schema = require('../../validatorSchemas/createLessonSchema');
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -31,8 +32,8 @@ const main = async (event) => {
 }
 
 module.exports.main = middy(main)
-  .use(validator)
-  .use(jsonBodyParser())
   .use(cors())
+  .use(jsonBodyParser())
+  .use(validator({ inputSchema: schema }))
   .use(errorHandler())
   .use(JSONErrorHandlerMiddleware.default());

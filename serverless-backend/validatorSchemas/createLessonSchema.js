@@ -1,7 +1,5 @@
-const validator = require('@middy/validator');
-
-module.exports = validator({
-  inputSchema: {
+module.exports = {
+  body: {
     required: ['title', 'url'],
     properties: {
       title: {
@@ -12,4 +10,4 @@ module.exports = validator({
       }
     }
   }
-});
+};
